@@ -4,10 +4,10 @@ import { Injectable } from '@nestjs/common';
 export class ExecutorService {
   executeCode(code: string): any {
     try {
-      console.log(code);
-      return eval(code);
+      const response = eval(code);
+      return response;
     } catch (err) {
-      return { error: err.message };
+      return { error: `API Regra de Negócio Dinamica: ${err.message}`, status: 1001 };
     }
   }
 }

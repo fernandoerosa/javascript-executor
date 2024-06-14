@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { ExecutorService } from './executor.service';
 
 @Controller('execute')
@@ -7,11 +7,12 @@ export class ExecutorController {
 
   @Post()
   async executeCode(@Body('code') code: string, @Body('variables') variables: any): Promise<any> {
+    let stringVariables = "";
 
     for (const [key, value] of Object.entries(variables)) {
-      console.log(key);
+      stringVariables += `const ${key} = ${value};`;
     }
 
-    return this.executorService.executeCode(code);
+    return this.executorService.executeCode(stringVariables + code);
   }
 }
