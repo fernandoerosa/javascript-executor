@@ -7,12 +7,9 @@ export class ExecutorController {
 
   @Post()
   async executeCode(@Body('code') code: string, @Body('variables') variables: any): Promise<any> {
-    let stringVariables = "";
+    let result = this.executorService.executeCode(code, variables);
+    console.log(result);
 
-    for (const [key, value] of Object.entries(variables)) {
-      stringVariables += `const ${key} = ${value};`;
-    }
-
-    return this.executorService.executeCode(stringVariables + code);
+    return result;
   }
 }
